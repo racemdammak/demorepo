@@ -5,7 +5,7 @@ class Storage:
     FILE_NAME = "tasks.json"
 
     @classmethod
-    def save(cls, tasks):
+    def save(cls, tasks): # legacy code
         with open(cls.FILE_NAME, "w") as f:
             json.dump([task.to_dict() for task in tasks], f, indent=4)
 
