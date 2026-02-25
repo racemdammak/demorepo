@@ -21,7 +21,7 @@ def main():
 
         elif choice == "2":
             name = input("Item name: ")
-            qty = int(input("Quantity to reduce: "))
+            qty = int(input("Quantity to reduce: ")) #test here
             inv.reduce_stock(name, qty)
             print("Stock reduced.")
 

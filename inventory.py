@@ -11,9 +11,8 @@ class Inventory:
         else:
             self.items[name] = quantity
 
-        # BUG (TST-103): Missing save_inventory(self.items)
 
-    def reduce_stock(self, name, quantity):
+    def reduce_stock(self, name, quantity): # legacy code
         if name not in self.items:
             print("Error: Item does not exist.")
             return False
