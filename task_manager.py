@@ -16,7 +16,7 @@ class TaskManager:
         self.tasks.append(task)
 
         if self.settings.get("auto_sort"):
-            self.sort_by_priority()
+            self.sort_by_priority(save=False)
 
         self.storage.save(self.tasks)
 
@@ -36,5 +36,7 @@ class TaskManager:
     def search_tasks(self, keyword):
         return [task for task in self.tasks if keyword.lower() in task.title.lower()]
 
-    def sort_by_priority(self):
+    def sort_by_priority(self, save=True):
         self.tasks.sort(key=lambda task: task.priority)
+        if save:
+            self.storage.save(self.tasks)
