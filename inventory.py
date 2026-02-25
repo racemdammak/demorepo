@@ -15,7 +15,6 @@ class Inventory:
 
     def reduce_stock(self, name, quantity):
         if name in self.items:
-            # BUG (TST-101): No validation for negative stock
             self.items[name] -= quantity
             save_inventory(self.items)
 
