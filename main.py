@@ -20,7 +20,8 @@ def main():
         print("4. Mark Completed")
         print("5. Search Task")
         print("6. Sort by Priority")
-        print("7. Exit")
+        print("7. Settings")
+        print("8. Exit")
 
         choice = input("Choose: ")
 
@@ -53,11 +54,46 @@ def main():
             print("Tasks sorted by priority.")
 
         elif choice == "7":
+            settings_menu(manager)
+
+        elif choice == "8":
             print("Goodbye 👋")
             break
 
         else:
             print("Invalid choice!")
 
+    def settings_menu(manager):
+        settings = manager.settings
+
+        while True:
+            print("\n=== SETTINGS ===")
+            print("1. Change default priority")
+            print("2. Toggle auto sort")
+            print("3. Change storage file")
+            print("4. Back")
+
+            choice = input("Choose: ")
+
+            if choice == "1":
+                priority = int(input("New default priority (1-5): "))
+                settings.update("default_priority", priority)
+                print("Default priority updated.")
+
+            elif choice == "2":
+                current = settings.get("auto_sort")
+                settings.update("auto_sort", not current)
+                print(f"Auto sort set to {not current}")
+
+            elif choice == "3":
+                filename = input("New storage file name: ")
+                settings.update("storage_file", filename)
+                print("Storage file updated (restart app recommended).")
+
+            elif choice == "4":
+                break
+
+            else:
+                print("Invalid choice.")
 if __name__ == "__main__":
     main()
