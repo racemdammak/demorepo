@@ -58,3 +58,12 @@ class Inventory:
 
     def get_all_items(self):
         return self.items.copy()
+    
+    # in this function we will be calling our legacy code unit: so it can be detected as a conflict.
+    def verify_integrity(self):
+        """
+        Verifies current inventory integrity using legacy checksum function.
+        """
+        current_checksum = generate_inventory_checksum(self.items)
+        print(f"Current Inventory Checksum: {current_checksum}")
+        return current_checksum
