@@ -9,7 +9,8 @@ def load_inventory():
         return {}
 
     with open(FILE_PATH, "r") as f:
-        return json.load(f)
+        # Hidden bug: no JSON error handling
+        return json.load(f)  
 
 
 def save_inventory(data):
