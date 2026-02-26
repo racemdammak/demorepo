@@ -10,8 +10,8 @@ def main():
         print("2. Reduce Stock")
         print("3. Delete Item")
         print("4. View Inventory")
-        print("5. Exit")
-
+        print("5. Verify Inventory Integrity")
+        print("6. Exit")
         choice = input("Choose option: ")
 
         if choice == "1":
@@ -41,11 +41,10 @@ def main():
                     print(f"- {name}: {qty}")
 
         elif choice == "5":
-            print("Exiting...")
-            break
+            inv.verify_integrity()
 
-        else:
-            print("Invalid choice")
+        elif choice == "6":
+            break
 
 
 if __name__ == "__main__":

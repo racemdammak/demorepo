@@ -1,4 +1,5 @@
 from storage import load_inventory, save_inventory
+from storage import generate_inventory_checksum
 
 
 class Inventory:
@@ -58,3 +59,12 @@ class Inventory:
 
     def get_all_items(self):
         return self.items.copy()
+    
+    def verify_integrity(self):
+        """
+        Verifies current inventory integrity using legacy checksum function.
+        """
+        # here we are calling the legacy code unit
+        current_checksum = generate_inventory_checksum(self.items)
+        print(f"Current Inventory Checksum: {current_checksum}")
+        return current_checksum
