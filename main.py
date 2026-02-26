@@ -9,28 +9,39 @@ def main():
         print("1. Add Item")
         print("2. Reduce Stock")
         print("3. Delete Item")
-        print("4. Exit")
+        print("4. View Inventory")
+        print("5. Exit")
 
         choice = input("Choose option: ")
 
         if choice == "1":
-            name = input("Item name: ")
+            name = input("Item name: ").strip()
             qty = int(input("Quantity: "))
-            inv.add_item(name, qty)
-            print("Item added.")
+            if inv.add_item(name, qty):
+                print("Item added successfully.")
 
         elif choice == "2":
-            name = input("Item name: ")
+            name = input("Item name: ").strip()
             qty = int(input("Quantity to reduce: "))
-            inv.reduce_stock(name, qty)
-            print("Stock reduced.")
+            if inv.reduce_stock(name, qty):
+                print("Stock reduced successfully.")
 
         elif choice == "3":
-            name = input("Item name: ")
-            inv.delete_item(name)
-            print("Item deleted.")
+            name = input("Item name: ").strip()
+            if inv.delete_item(name):
+                print("Item deleted successfully.")
 
         elif choice == "4":
+            items = inv.get_all_items()
+            if not items:
+                print("Inventory is empty.")
+            else:
+                print("\nCurrent Inventory:")
+                for name, qty in items.items():
+                    print(f"- {name}: {qty}")
+
+        elif choice == "5":
+            print("Exiting...")
             break
 
         else:
