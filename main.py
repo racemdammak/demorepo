@@ -4,13 +4,13 @@ from inventory import Inventory
 def main():
     inv = Inventory()
 
-    print("Mini Inventory Tracker")
-    print("1. Add Item")
-    print("2. Reduce Stock")
-    print("3. Get Item")
-    print("4. Exit")
-
     while True:
+        print("\nMini Inventory Tracker")
+        print("1. Add Item")
+        print("2. Reduce Stock")
+        print("3. Delete Item")
+        print("4. Exit")
+
         choice = input("Choose option: ")
 
         if choice == "1":
@@ -21,13 +21,14 @@ def main():
 
         elif choice == "2":
             name = input("Item name: ")
-            qty = int(input("Quantity to reduce: ")) #test here
+            qty = int(input("Quantity to reduce: "))
             inv.reduce_stock(name, qty)
             print("Stock reduced.")
 
         elif choice == "3":
             name = input("Item name: ")
-            print("Quantity:", inv.get_item(name))
+            inv.delete_item(name)
+            print("Item deleted.")
 
         elif choice == "4":
             break
@@ -38,4 +39,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    #test
