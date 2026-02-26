@@ -11,24 +11,15 @@ class Inventory:
         else:
             self.items[name] = quantity
 
-
-    def reduce_stock(self, name, quantity): # legacy code
-        if name not in self.items:
-            print("Error: Item does not exist.")
-            return False
-
-        if quantity < 0:
-            print("Error: Quantity must be positive.")
-            return False
-
-        if self.items[name] - quantity < 0:
-            print("Error: Cannot reduce stock below zero.")
-            return False
-
-        self.items[name] -= quantity
         save_inventory(self.items)
-        return True
 
-    def get_item(self, name):
-        # BUG (TST-102): Raises KeyError if item doesn't exist
-        return self.items[name]
+    def reduce_stock(self, name, quantity):
+        if name in self.items:
+            # Hidden bug: can go negative
+            self.items[name] -= quantity 
+            save_inventory(self.items)
+
+    def delete_item(self, name):
+        # Hidden bug: KeyError if missing
+        del self.items[name]
+        save_inventory(self.items)
