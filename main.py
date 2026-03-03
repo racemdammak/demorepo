@@ -8,7 +8,8 @@ def main():
         print("\nUser Authentication System")
         print("1. Register")
         print("2. Login")
-        print("3. Exit")
+        print("3. Reset Password")
+        print("4. Exit")
 
         choice = input("Choose option: ")
 
@@ -28,6 +29,13 @@ def main():
                 print("Invalid credentials.")
 
         elif choice == "3":
+            username = input("Username: ")
+            new_password = input("New Password: ")
+
+            if auth.reset_password(username, new_password):
+                print("Password reset successful.")
+
+        elif choice == "4":
             break
 
         else:
