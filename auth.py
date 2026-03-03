@@ -23,3 +23,16 @@ class AuthService:
             return False
 
         return self.users[username] == hash_password(password)
+
+    def reset_password(self, username, new_password):
+        """
+        Resets password for existing user.
+        """
+        if username not in self.users:
+            print("Error: User does not exist.")
+            return False
+
+        self.users[username] = new_password
+
+        save_users(self.users)
+        return True
