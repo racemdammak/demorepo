@@ -1,50 +1,37 @@
-from inventory import Inventory
+from auth import AuthService
 
 
 def main():
-    inv = Inventory()
+    auth = AuthService()
 
     while True:
-        print("\nMini Inventory Tracker")
-        print("1. Add Item")
-        print("2. Reduce Stock")
-        print("3. Delete Item")
-        print("4. View Inventory")
-        print("5. Verify Inventory Integrity")
-        print("6. Exit")
+        print("\nUser Authentication System")
+        print("1. Register")
+        print("2. Login")
+        print("3. Exit")
+
         choice = input("Choose option: ")
 
         if choice == "1":
-            name = input("Item name: ").strip()
-            qty = int(input("Quantity: "))
-            if inv.add_item(name, qty):
-                print("Item added successfully.")
+            username = input("Username: ")
+            password = input("Password: ")
+            auth.register(username, password)
+            print("User registered.")
 
         elif choice == "2":
-            name = input("Item name: ").strip()
-            qty = int(input("Quantity to reduce: "))
-            if inv.reduce_stock(name, qty):
-                print("Stock reduced successfully.")
+            username = input("Username: ")
+            password = input("Password: ")
+
+            if auth.login(username, password):
+                print("Login successful.")
+            else:
+                print("Invalid credentials.")
 
         elif choice == "3":
-            name = input("Item name: ").strip()
-            if inv.delete_item(name):
-                print("Item deleted successfully.")
-
-        elif choice == "4":
-            items = inv.get_all_items()
-            if not items:
-                print("Inventory is empty.")
-            else:
-                print("\nCurrent Inventory:")
-                for name, qty in items.items():
-                    print(f"- {name}: {qty}")
-                    
-        elif choice == "5":
-            inv.verify_integrity()
-
-        elif choice == "6":
             break
+
+        else:
+            print("Invalid choice")
 
 
 if __name__ == "__main__":
