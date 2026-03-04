@@ -1,39 +1,31 @@
-from auth import AuthService
+from expense_manager import ExpenseManager
 
 
 def main():
-    auth = AuthService()
+    manager = ExpenseManager()
 
     while True:
-        print("\nUser Authentication System")
-        print("1. Register")
-        print("2. Login")
-        print("3. Reset Password")
+        print("\nExpense Tracker")
+        print("1. Add Expense")
+        print("2. View Expenses")
+        print("3. View Total")
         print("4. Exit")
 
         choice = input("Choose option: ")
 
         if choice == "1":
-            username = input("Username: ")
-            password = input("Password: ")
-            auth.register(username, password)
-            print("User registered.")
+            description = input("Description: ")
+            amount = input("Amount: ")  # BUG: Not converting to float
+            manager.add_expense(description, amount)
+            print("Expense added.")
 
         elif choice == "2":
-            username = input("Username: ")
-            password = input("Password: ")
-
-            if auth.login(username, password):
-                print("Login successful.")
-            else:
-                print("Invalid credentials.")
+            expenses = manager.list_expenses()
+            for e in expenses:
+                print(f"{e['description']} - {e['amount']}")
 
         elif choice == "3":
-            username = input("Username: ")
-            new_password = input("New Password: ")
-
-            if auth.reset_password(username, new_password):
-                print("Password reset successful.")
+            print("Total:", manager.calculate_total())
 
         elif choice == "4":
             break
@@ -44,5 +36,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-    #test0101
