@@ -245,7 +245,7 @@ async def start_ingest(req: IngestRequest, background_tasks: BackgroundTasks):
             .select("id, last_commit, jira_project_id, notion_project_id")
             .eq("repo_url", req.repo_url)
             .eq("user_id", req.user_id)
-            .maybe_single()
+            .limit(1)
             .execute()
         )
         
