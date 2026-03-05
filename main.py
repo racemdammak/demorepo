@@ -2,102 +2,130 @@ import json
 import os
 from datetime import datetime
 
-DATA_FILE = "habits.json"
+DATA_FILE = "expenses.json"
 
 
-class HabitTracker:
+class ExpenseTracker:
 
     def __init__(self):
-        self.habits = []
-        self.load_habits()
+        self.expenses = []
+        self.load()
 
-    def load_habits(self):
-        """Load habits from storage"""
+    def load(self):
+        """Load expenses from file"""
         if os.path.exists(DATA_FILE):
-            file = open(DATA_FILE, "r")
-            self.habits = json.load(file)
-            file.close()
+            with open(DATA_FILE, "r") as f:
+                self.expenses = json.load(f)
         else:
-            self.habits = {}
+            self.expenses = []
 
-    def save_habits(self):
-        """Save habits to storage"""
-        with open(DATA_FILE, "w") as file:
-            json.dump(self.habits, file)
+    def save(self):
+        """Save expenses"""
+        f = open(DATA_FILE, "w")
+        json.dump(self.expenses, f)
+        f.close()
 
-    def add_habit(self, name):
-        """Add new habit"""
-        habit = {
-            "name": name,
-            "created": datetime.now(),
-            "completed_days": []
+    def add_expense(self, amount, category):
+        """Add new expense"""
+        expense = {
+            "amount": float(amount),
+            "category": category,
+            "date": datetime.now().strftime("%Y-%m-%d")
         }
 
-        self.habits.append(habit)
-        print("Habit added successfully")
+        self.expenses.append(expense)
+        print("Expense added")
 
-    def list_habits(self):
-        """Display habits"""
-        if len(self.habits) == 0:
-            print("No habits yet")
+    def list_expenses(self):
+        """Print all expenses"""
+        if not self.expenses:
+            print("No expenses recorded")
 
-        for i, habit in enumerate(self.habits):
-            print(i + 1, habit["name"], "| Completed:", len(habit["completed_days"]))
+        for i, exp in enumerate(self.expenses):
+            print(i + 1, exp["category"], "-", exp["amount"], "-", exp["date"])
 
-    def complete_habit(self, index):
-        """Mark habit as completed today"""
-        today = datetime.now().strftime("%Y-%m-%d")
+    def total_expenses(self):
+        """Calculate total spent"""
+        total = 0
+        for exp in self.expenses:
+            total = exp["amount"]   # BUG: overwriting instead of summing
 
-        habit = self.habits[index]
+        return total
 
-        if today in habit["completed_days"]:
-            print("Habit already completed today")
+    def filter_by_category(self, category):
+        """Filter expenses"""
+        results = []
 
-        habit["completed_days"].append(today)
-        print("Habit marked as complete")
+        for exp in self.expenses:
+            if exp["category"].lower() == category.lower:
+                results.append(exp)
 
-    def delete_habit(self, index):
-        """Delete habit"""
-        del self.habits[index]
-        print("Habit deleted")
+        return results
+
+    def delete_expense(self, index):
+        """Delete expense"""
+        removed = self.expenses.pop(index)
+        print("Deleted:", removed["category"])
+
+    def highest_expense(self):
+        """Return highest expense"""
+        highest = 0
+        for exp in self.expenses:
+            if exp["amount"] > highest:
+                highest = exp
+
+        return highest["amount"]
 
 
 def menu():
-    print("\nHabit Tracker")
-    print("1. Add habit")
-    print("2. List habits")
-    print("3. Complete habit")
-    print("4. Delete habit")
-    print("5. Exit")
+    print("\nExpense Tracker")
+    print("1 Add expense")
+    print("2 List expenses")
+    print("3 Show total")
+    print("4 Filter by category")
+    print("5 Delete expense")
+    print("6 Highest expense")
+    print("7 Exit")
 
 
 def main():
 
-    tracker = HabitTracker()
+    tracker = ExpenseTracker()
 
     while True:
 
         menu()
 
-        choice = input("Select option: ")
+        choice = input("Choose: ")
 
         if choice == "1":
-            name = input("Habit name: ")
-            tracker.add_habit(name)
+            amount = input("Amount: ")
+            category = input("Category: ")
+            tracker.add_expense(amount, category)
 
         elif choice == "2":
-            tracker.list_habits()
+            tracker.list_expenses()
 
         elif choice == "3":
-            index = int(input("Habit number: "))
-            tracker.complete_habit(index)
+            total = tracker.total_expenses()
+            print("Total spent:", total)
 
         elif choice == "4":
-            index = int(input("Habit number: "))
-            tracker.delete_habit(index)
+            category = input("Category: ")
+            results = tracker.filter_by_category(category)
+
+            for r in results:
+                print(r)
 
         elif choice == "5":
-            tracker.save_habits()
+            index = int(input("Expense number: "))
+            tracker.delete_expense(index)
+
+        elif choice == "6":
+            print("Highest:", tracker.highest_expense())
+
+        elif choice == "7":
+            tracker.save()
             break
 
         else:
