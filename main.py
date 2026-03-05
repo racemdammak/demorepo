@@ -1,31 +1,31 @@
-from expense_manager import ExpenseManager
+from key_manager import KeyManager
 
-
+#t
 def main():
-    manager = ExpenseManager()
+    manager = KeyManager()
 
     while True:
-        print("\nExpense Tracker")
-        print("1. Add Expense")
-        print("2. View Expenses")
-        print("3. View Total")
+        print("\nAPI Key Manager")
+        print("1. Generate Key")
+        print("2. List Active Keys")
+        print("3. Revoke Key")
         print("4. Exit")
 
         choice = input("Choose option: ")
 
         if choice == "1":
-            description = input("Description: ")
-            amount = input("Amount: ")  # BUG: Not converting to float
-            manager.add_expense(description, amount)
-            print("Expense added.")
+            key = manager.generate_key()
+            print("Generated Key:", key)
 
         elif choice == "2":
-            expenses = manager.list_expenses()
-            for e in expenses:
-                print(f"{e['description']} - {e['amount']}")
+            keys = manager.list_active_keys()
+            for k in keys:
+                print(k["key"])
 
         elif choice == "3":
-            print("Total:", manager.calculate_total())
+            key_value = input("Enter key to revoke: ")
+            manager.revoke_key(key_value)
+            print("Key revoked.")
 
         elif choice == "4":
             break
