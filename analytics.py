@@ -35,3 +35,15 @@ def calculate_task_score(task):
         score += 2
 
     return score
+
+
+def rank_tasks(tasks):
+    scored = []
+
+    for task in tasks:
+        score = calculate_task_score(task)
+        scored.append((task["title"], score))
+
+    scored.sort(key=lambda x: x[1], reverse=True)
+
+    return scored
