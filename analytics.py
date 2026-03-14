@@ -1,4 +1,4 @@
-from utils import format_report
+from utils import format_report, normalize_priority
 
 def calculate_productivity(tasks):
     completed = [t for t in tasks if t["done"]]
@@ -24,9 +24,11 @@ def generate_weekly_report(tasks):
 def calculate_task_score(task):
     score = 0
 
-    if task["priority"] == "high":
+    priority = normalize_priority(task["priority"])
+
+    if priority == "high":
         score += 5
-    elif task["priority"] == "medium":
+    elif priority == "medium":
         score += 3
     else:
         score += 1
