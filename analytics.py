@@ -43,7 +43,16 @@ def rank_tasks(tasks):
     scored = []
 
     for task in tasks:
+
+        if isinstance(task["priority"], int):
+            mapping = {1: "low", 2: "medium", 3: "high"}
+            task["priority"] = mapping.get(task["priority"], "low")
+
         score = calculate_task_score(task)
+
+        if task.get("urgency") == "critical":
+            score += 5
+
         scored.append((task["title"], score))
 
     scored.sort(key=lambda x: x[1], reverse=True)
