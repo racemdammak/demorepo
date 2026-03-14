@@ -1,16 +1,21 @@
-from analytics import generate_weekly_report, calculate_task_score
+from analytics import generate_weekly_report, rank_tasks
 from storage import load_tasks
+
 
 def main():
     tasks = load_tasks("tasks.json")
 
-    report = generate_weekly_report(tasks)
-    print(report)
+    if not tasks:
+        print("No tasks found.")
+        return
 
-    print("\nTask Scores:")
-    for task in tasks:
-        score = calculate_task_score(task)
-        print(task["title"], "->", score)
+    print(generate_weekly_report(tasks))
+
+    print("\nTask Ranking:")
+    ranking = rank_tasks(tasks)
+
+    for title, score in ranking:
+        print(f"{title} -> {score}")
 
 
 if __name__ == "__main__":
