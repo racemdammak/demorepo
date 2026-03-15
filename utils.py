@@ -1,38 +1,20 @@
-def normalize_priority(priority):
+def normalize_title(title):
     """
-    Normalize priority values.
-    Supports strings and numeric values.
+    Normalize book titles for consistent storage.
     """
-    if isinstance(priority, int):
-        mapping = {1: "low", 2: "medium", 3: "high"}
-        return mapping.get(priority, "low")
-
-    if isinstance(priority, str):
-        return priority.lower().strip()
-
-    return "low"
+    return title.strip().title()
 
 
-def normalize_urgency(urgency):
+def normalize_author(author):
     """
-    Normalize urgency values.
+    Normalize author names.
     """
-    if not urgency:
-        return "normal"
-
-    return urgency.lower().strip()
+    return author.strip().title()
 
 
-def format_report(data):
+def format_book(book):
     """
-    Format productivity report for display.
+    Format a book for display.
     """
-    lines = []
-    lines.append("Weekly Productivity Report")
-    lines.append("--------------------------")
-
-    lines.append(f"Total Tasks: {data['tasks_total']}")
-    lines.append(f"Completed Tasks: {data['tasks_completed']}")
-    lines.append(f"Productivity: {round(data['productivity'] * 100, 2)}%")
-
-    return "\n".join(lines)
+    status = "Available" if book["available"] else "Borrowed"
+    return f"{book['title']} by {book['author']} ({book['year']}) - {status}"
