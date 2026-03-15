@@ -1,10 +1,7 @@
 import json
 
 
-def load_tasks(file_path):
-    """
-    Load tasks from JSON file.
-    """
+def load_books(file_path):
     try:
         with open(file_path, "r") as f:
             return json.load(f)
@@ -14,9 +11,6 @@ def load_tasks(file_path):
         return []
 
 
-def save_tasks(file_path, tasks):
-    """
-    Save tasks to JSON file.
-    """
+def save_books(file_path, books):
     with open(file_path, "w") as f:
-        json.dump(tasks, f, indent=2)
+        json.dump(books, f, indent=2)
